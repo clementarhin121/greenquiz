@@ -1,22 +1,16 @@
 import { useState } from "react";
+import { Link } from "react-router-dom"; // 👈 using Link
 import Side from "./components/Side";
-import { useNavigate } from "react-router-dom";
 
 function Quiz() {
   const [questionNumber, setQuestionNumber] = useState(0);
   const [score, setScore] = useState(0);
-  const [userAnswer, setUseranswer] = useState({});
-  const [qn, setQn] = useState(10);
-  const questions = [
-    { Question: "Who discovered penicillin?",
-      ans: [
-        "Marie Curie",
-        "Alexander Fleming",
-        "Louis Pasteur",
-        "Isaac Newton",
-      ],
-      correct: "Alexander Fleming",
+  const [userAnswer, setUserAnswer] = useState({});
+  const [remainingQuestions, setRemainingQuestions] = useState(10);
+  const [finished, setFinished] = useState(false);
 
+  const questions = [
+    {
       Question: "Who discovered penicillin?",
       ans: [
         "Marie Curie",
@@ -88,65 +82,88 @@ function Quiz() {
     },
   ];
 
-  const handlechange = (e) => {
+  const handleChange = (e) => {
     const selectedAnswer = e.target.value;
 
-    setUseranswer((prevAnswers) => ({
-      ...prevAnswers,
+    setUserAnswer((prev) => ({
+      ...prev,
       [questionNumber]: selectedAnswer,
     }));
 
-    if (questions[questionNumber].correct === selectedAnswer) {
-      setScore((prevScore) => prevScore + 1);
+    if (
+      questions[questionNumber].correct === selectedAnswer &&
+      userAnswer[questionNumber] !== selectedAnswer
+    ) {
+      setScore((prev) => prev + 1);
     }
-    setQn((q) => q - 1);
+
+    setRemainingQuestions((q) => q - 1);
   };
 
-  const nextquestion = () => {
+  const nextQuestion = () => {
     if (questionNumber < questions.length - 1) {
       setQuestionNumber((q) => q + 1);
     } else {
-      window.location.href = "/"; // Redirect to homepage
+      setFinished(true); // 👈 mark quiz as finished
     }
   };
 
   return (
-    <>
-      <div className="body">
-        <div className="quizBody">
-          <Side />
-          <div className="question">
-            <div className="response">
-              <h1>QUIZ</h1>
-              <h2>Question {questionNumber}</h2>
-              <h2>{questions[questionNumber].Question}</h2>
-              <form id="q1">
-                {questions[questionNumber].ans.map((ans, index) => (
-                  <label key={index}>
-                    <input
-                      id={index}
-                      type="radio"
-                      name="q1"
-                      value={ans}
-                      checked={userAnswer[questionNumber] === ans}
-                      onChange={handlechange}
-                    />
-                    &nbsp;
-                    {ans}
-                    <br />
-                  </label>
-                ))}
-              </form>
-              <br />
-              <button onClick={nextquestion}>Next</button>
-              <p>Selected: {userAnswer[questionNumber]}</p>
-              <p>Score: {score}</p>
-              <p>Total Questions: {qn}</p>
-            </div>
+    <div className="body">
+      <div className="quizBody">
+        <Side />
+        <div className="question">
+          <div className="response">
+            <h1>QUIZ</h1>
+
+            {!finished ? (
+              <>
+                <h2>
+                  Question {questionNumber + 1} of {questions.length}
+                </h2>
+                <h2>{questions[questionNumber].Question}</h2>
+
+                <form id="q1">
+                  {questions[questionNumber].ans.map((ans, index) => (
+                    <label key={index}>
+                      <input
+                        type="radio"
+                        name={`q${questionNumber}`}
+                        value={ans}
+                        checked={userAnswer[questionNumber] === ans}
+                        onChange={handleChange}
+                      />
+                      &nbsp; {ans}
+                      <br />
+                    </label>
+                  ))}
+                </form>
+
+                <br />
+                <button
+                  onClick={nextQuestion}
+                  disabled={!userAnswer[questionNumber]}>
+                  Next
+                </button>
+
+                <p>Selected: {userAnswer[questionNumber] || "None"}</p>
+                <p>Score: {score}</p>
+                <p>Remaining Questions: {remainingQuestions}</p>
+              </>
+            ) : (
+              <>
+                <h2>Quiz Finished!</h2>
+                <p>
+                  Your final score: {score} / {questions.length}
+                </p>
+                <a href="./greenquiz">Go Home</a> {/* classic HTML link */}
+                {/* 👈 simple link to home */}
+              </>
+            )}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

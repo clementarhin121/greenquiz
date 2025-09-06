@@ -12,7 +12,10 @@ function Menu() {
     <>
       <div className="menuBody">
         <div className="logo">
-          <h1>REACT QUIZ</h1>
+          <a href="./greenquiz">
+            {" "}
+            <h1>REACT QUIZ</h1>
+          </a>
         </div>
         <div className="burger">
           <div
