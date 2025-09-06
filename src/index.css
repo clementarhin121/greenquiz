@@ -1,0 +1,141 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.menuBody {
+  border: 1px solid rgba(128, 128, 128, 0.268);
+  height: 10vh;
+  display: flex;
+  position: fixed;
+  width: 100vw;
+  gap: 50vw;
+
+  .logo {
+    width: 30vw;
+    padding-top: 3.5vh;
+    padding-left: 1vw;
+    cursor: pointer;
+  }
+  .burger {
+    width: 20vw;
+    padding-top: 2vh;
+    padding-left: 6vw;
+    .lanes {
+      background-color: rgb(188, 54, 6);
+      cursor: pointer;
+      width: 8vw;
+      height: 7vh;
+      padding-top: 2vh;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4vh;
+      div {
+        width: 5vw;
+        background-color: rgb(255, 255, 255);
+        height: 1vh;
+        transition: 0.2s;
+      }
+    }
+    .toggle .lane1 {
+      width: 1vh;
+    }
+  }
+}
+.body {
+  height: 100vh;
+  padding-top: 10vh;
+  .quizBody {
+    height: 100vh;
+    align-items: center;
+
+    .sideBody {
+      height: 70vh;
+      width: 40vw;
+      margin-left: 58vw;
+      transform: translateX(0);
+      background-color: rgba(154, 149, 148, 0.997);
+      position: fixed;
+      transition: 0.2s ease-in-out;
+      transform: translateX(100%);
+
+      nav {
+        ul {
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+          gap: 4vh;
+          list-style: none;
+          padding-top: 2vh;
+          margin: 0; /* Removes default margin */
+          color: white;
+
+          li {
+            text-align: center;
+            padding: 2ch;
+            font-size: 1.4em;
+            margin-left: -5.2vw;
+            cursor: pointer;
+            transition: 0.1s;
+          }
+          li:hover {
+            scale: 1.1;
+          }
+        }
+      }
+    }
+    .isactive {
+      transform: translateX(0);
+    }
+    .question {
+      width: 100%;
+      height: 100vh;
+      padding-top: 1vh;
+      .response {
+        padding-top: 2vh;
+
+        border: 10px solid goldenrod;
+        margin-left: 24vw;
+        width: 60vw;
+        height: 80vh;
+        text-align: center;
+        align-items: center;
+
+        form {
+          justify-content: left;
+          align-items: left;
+          text-align: left;
+          padding: 4vh;
+          padding-left: 15vw;
+          display: flex;
+          flex-direction: column;
+          gap: 2vh;
+          height: 22vh;
+          font-size: 1.2em;
+
+          label {
+            justify-content: left;
+            align-items: left;
+            text-align: left;
+            input {
+              align-items: left;
+              justify-content: left;
+              align-items: left;
+              text-align: left;
+            }
+          }
+        }
+        button {
+          font-size: 1.2em;
+          padding: 2vh;
+          border: none;
+          background-color: rgb(3, 204, 13);
+          color: rgb(255, 255, 255);
+          cursor: pointer;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+}
